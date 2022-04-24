@@ -1,11 +1,11 @@
 class Settings:
 	PRIMARY_DELAY_MS : int = 200
-	STEAKS_PER_MAZE : int = 10
 	INITIAL_SIZE : int = 10
-	SCALE : int = 2
+	SCALE : int = 4
 	BLOCK_SIZE : int = 8
-	SPEEDUP_ON_LEVELUP : int = 20
-	GROWTH_ON_LEVELUP : int = 10
+	STEAKS_PER_MAZE : int = 5
+	SPEEDUP_ON_LEVELUP : int = 100
+	GROWTH_ON_LEVELUP : int = 15
 
 class Paths:
 	GRAPHICS_STEAK_PATH : str = "../assets/graphics/steak.png"

@@ -31,14 +31,17 @@ class Maze:
 	def determine_maze_dimensions(self):
 		"""Determines the width and height of the maze from the template."""
 		greatest_width : int = 0
+		lowest_width : int = 999999
 		height : int = len(self.template)
 		
 		for row_data in self.template:
 			row_width = len(row_data)
 			if (row_width > greatest_width):
 				greatest_width = row_width
-			if (row_width < greatest_width):
-				raise "There is an error in the maze template.  All lines must be the same length."
+			if (row_width < lowest_width):
+				lowest_width = row_width
+		if (lowest_width < greatest_width):
+			raise "There is an error in the maze template.  All lines must be the same length."
 		
 		self.maze_height : int = height
 		self.maze_width : int = greatest_width

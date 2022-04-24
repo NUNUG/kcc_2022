@@ -6,18 +6,11 @@ class MazeMaker:
 	MAZE_HEIGHT : int = 50
 	def __init__(self):
 		self.maze_templates : MazeTemplates = MazeTemplates()
-		self.maze_number : int = -1
-		self.maze : list[int]  = self.first_maze()
-	def first_maze(self):
-		"""Set the current maze to the first maze."""
-		self.maze_number = 0
-		template = self.maze_templates.templates[self.maze_number]
-		maze = Maze(template)
-		#maze = self.maze_templates.render_maze(template)
-		return maze
+		self.maze_number : int = self.maze_templates.maze_count() - 1
+		self.maze : list[int]  = None
 	def next_maze(self):
 		"""Move to the next maze until we run out, then start over at 0 again."""
-		self.maze_number = (self.maze_number + 1 % self.maze_templates.maze_count())
+		self.maze_number = (self.maze_number + 1) % self.maze_templates.maze_count()
 		template = self.maze_templates.templates[self.maze_number]
 		#maze = self.maze_templates.render_maze(template)
 		maze = Maze(template)

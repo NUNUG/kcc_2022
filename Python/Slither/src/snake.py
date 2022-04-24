@@ -8,6 +8,7 @@ class Snake:
 		self.size : int = size
 		self.max_size : int = max_size
 		self.head_position : tuple[int, int] = position
+		self.head_direction: int = direction
 		self.direction : int = direction
 		self.blocks : list[tuple[int, int], int] = [(position, direction)]
 	def move(self, direction):
@@ -16,6 +17,7 @@ class Snake:
 		direction_vector = DIRECTION_VECTORS[direction]
 		new_head_position = (self.head_position[0] + direction_vector[0], self.head_position[1] + direction_vector[1])
 		self.head_position = new_head_position
+		self.head_direction = self.direction
 		self.blocks.append((self.head_position, direction))
 		# Unless we're still growing, move the tail by removing the first item in the snake.
 		if (self.size >= self.max_size):
