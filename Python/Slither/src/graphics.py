@@ -40,5 +40,5 @@ class Graphics:
 			pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_TONGUE_RIGHT_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE))
 		]
 		self.steak = pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_STEAK_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE))
-		self.block = pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_BLOCK_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE))
+		self.wall = pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_WALL_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE))
 		

@@ -11,7 +11,7 @@ class Settings:
 class Paths:
 	"""These are the locations on disk of all the game assets, such as sounds and graphics."""
 	GRAPHICS_STEAK_PATH : str = "../assets/graphics/steak.png"
-	GRAPHICS_BLOCK_PATH : str = "../assets/graphics/block.png"
+	GRAPHICS_WALL_PATH : str = "../assets/graphics/wall.png"
 
 	GRAPHICS_BODY_UP_PATH : str = "../assets/graphics/body-up.png"
 	GRAPHICS_BODY_DOWN_PATH : str = "../assets/graphics/body-down.png"

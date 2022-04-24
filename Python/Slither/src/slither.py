@@ -46,7 +46,11 @@ graphics = Graphics()
 sounds = Sounds()
 game = SlitherGame(maze_maker, snake, sounds)
 
-#maze = maze_maker.first_maze()
+def draw_block(x: int, y: int, block : pygame.surface):
+	screen.blit(block, (
+		x * Settings.BLOCK_SIZE * Settings.SCALE, 
+		y * Settings.BLOCK_SIZE * Settings.SCALE
+	))
 
 ###############################################################################
 # Main Game Loop
@@ -107,21 +111,14 @@ while True:
 				if block == maze.BLOCKTYPE_WALL:
 					# Draw a wall.  We draw a block every 8 pixels (because blocks 
 					# are 8x8), but then we double it because scale is 2x.
-					screen.blit(graphics.block, (
-						x * Settings.BLOCK_SIZE * Settings.SCALE, 
-						y * Settings.BLOCK_SIZE * Settings.SCALE
-					))
+					draw_block(x, y, graphics.wall)
 
 		# Draw the steak
 		(x, y) = game.steak_pos
-		screen.blit(graphics.steak, (
-			x * Settings.BLOCK_SIZE * Settings.SCALE, 
-			y * Settings.BLOCK_SIZE * Settings.SCALE
-		))
+		draw_block(x, y, graphics.steak)
 
 		# Draw the snake
 		# ... the body
-		# for block in snake.blocks:
 		first_block_num = 0
 		last_block_num = len(snake.blocks) - 1
 		for block_num in range(last_block_num):
@@ -130,24 +127,18 @@ while True:
 				(position, direction) = block
 				(x, y) = position
 				image = graphics.body[direction]
-				screen.blit(image, (
-					x * Settings.BLOCK_SIZE * Settings.SCALE, 
-					y * Settings.BLOCK_SIZE * Settings.SCALE
-				))
+				draw_block(x, y, image)
+
 			# ...the tail
 			(position, direction) = snake.blocks[0]
 			(x, y) = position
-			screen.blit(graphics.tail[direction], (
-				x * Settings.BLOCK_SIZE * Settings.SCALE, 
-				y * Settings.BLOCK_SIZE * Settings.SCALE
-			))
+			draw_block(x, y, graphics.tail[direction])
+
 			# ...the head
 			(position, direction) = snake.blocks[len(snake.blocks) - 1]
 			(x, y) = position
-			screen.blit(graphics.head[direction], (
-				x * Settings.BLOCK_SIZE * Settings.SCALE, 
-				y * Settings.BLOCK_SIZE * Settings.SCALE
-			))
+			draw_block(x, y, graphics.head[direction])
+
 			# ...the tongue
 			if game.tongue_visible:
 				(position, direction) = snake.blocks[len(snake.blocks) - 1]
@@ -155,11 +146,7 @@ while True:
 				(vx, vy) = DIRECTION_VECTORS[snake.head_direction]
 				tx = x + vx
 				ty = y + vy
-				screen.blit(graphics.tongue[direction], (
-					tx * Settings.BLOCK_SIZE * Settings.SCALE, 
-					ty * Settings.BLOCK_SIZE * Settings.SCALE
-				))
-
+				draw_block(tx, ty, graphics.tongue[direction])
 
 	# Show our screen on the monitor.
 	pygame.display.update()
