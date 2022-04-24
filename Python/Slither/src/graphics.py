@@ -25,7 +25,7 @@ class Graphics:
 			pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_TAIL_LEFT_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE)),
 			pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_TAIL_RIGHT_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE))
 		]
-		self.tail : pygame.surface = [
+		self.tongue : pygame.surface = [
 			pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_TONGUE_UP_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE)),
 			pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_TONGUE_DOWN_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE)),
 			pygame.transform.scale(pygame.image.load(Paths.GRAPHICS_TONGUE_LEFT_PATH), (Settings.BLOCK_SIZE * Settings.SCALE, Settings.BLOCK_SIZE * Settings.SCALE)),

@@ -1,9 +1,11 @@
 class Settings:
-	PRIMARY_DELAY_MS : int = 500
-	STEAKS_PER_ROUND : int = 5
+	PRIMARY_DELAY_MS : int = 200
+	STEAKS_PER_MAZE : int = 10
 	INITIAL_SIZE : int = 10
 	SCALE : int = 2
 	BLOCK_SIZE : int = 8
+	SPEEDUP_ON_LEVELUP : int = 20
+	GROWTH_ON_LEVELUP : int = 10
 
 class Paths:
 	GRAPHICS_STEAK_PATH : str = "../assets/graphics/steak.png"
@@ -28,3 +30,6 @@ class Paths:
 	GRAPHICS_TAIL_DOWN_PATH : str = "../assets/graphics/tail-down.png"
 	GRAPHICS_TAIL_LEFT_PATH : str = "../assets/graphics/tail-left.png"
 	GRAPHICS_TAIL_RIGHT_PATH : str = "../assets/graphics/tail-right.png"
+
+	FONT_PATH : str = "../assets/fonts/SnakeStitch.ttf"
+

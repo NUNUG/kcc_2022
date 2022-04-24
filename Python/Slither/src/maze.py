@@ -25,9 +25,9 @@ class Maze:
 				else:
 					out_line.append(Maze.BLOCKTYPE_FLOOR)
 			out_list.append(out_line)
-		self.maze_data : int = out_list
+		self.maze_data : list[list[int]] = out_list
 		self.determine_maze_dimensions()
-		self.initial_position : int = self.determine_initial_position()
+		self.determine_initial_position()
 	def determine_maze_dimensions(self):
 		"""Determines the width and height of the maze from the template."""
 		greatest_width : int = 0
@@ -51,8 +51,11 @@ class Maze:
 				if (self.maze_data[row_num][col_num] == Maze.BLOCKTYPE_STARTING_POSITION):
 					self.initial_position = (col_num, row_num)
 
-	def get_block(self, x, y):
+	def get_block(self, x : int, y : int):
 		# Maze data is stored as [row][col].  
-		return self.maze_data[y][x]
+		if y <= self.maze_height - 1:
+			if x <= self.maze_width - 1:
+				return self.maze_data[y][x]
+		return ((x, y), Maze.BLOCKTYPE_FLOOR)
 
 
