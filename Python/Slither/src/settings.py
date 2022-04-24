@@ -32,4 +32,5 @@ class Paths:
 	GRAPHICS_TAIL_RIGHT_PATH : str = "../assets/graphics/tail-right.png"
 
 	FONT_PATH : str = "../assets/fonts/SnakeStitch.ttf"
+	SOUND_EAT_PATH : str = "../assets/sounds/eat.mp3"
 

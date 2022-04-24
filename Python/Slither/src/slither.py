@@ -8,14 +8,16 @@
 import pygame
 from pygame.locals import *
 import sys
-from direction import *
-from graphics import Graphics
 
 # Slither game imports
 from slithergame import SlitherGame
-from snake import Snake
-from mazemaker import MazeMaker
+from snake import *
+from mazemaker import *
 from settings import *
+from direction import *
+from graphics import *
+from sounds import *
+
 
 pygame.init()
 
@@ -28,6 +30,7 @@ screen_columns = 40
 screen_size = (screen_columns * Settings.BLOCK_SIZE * Settings.SCALE, screen_rows * Settings.BLOCK_SIZE * Settings.SCALE)
 screen = pygame.display.set_mode([screen_size[0], screen_size[1]])
 font = pygame.font.Font(Paths.FONT_PATH, 96)
+bgfont = pygame.font.Font(Paths.FONT_PATH, 192)
 pygame.display.set_caption("Slither!")
 
 # Game speed
@@ -39,12 +42,15 @@ fps = 60
 
 maze_maker = MazeMaker()
 snake = Snake(1, Settings.INITIAL_SIZE, (0, 0), DIRECTION_RIGHT)
-game = SlitherGame(maze_maker, snake)
 graphics = Graphics()
+sounds = Sounds()
+game = SlitherGame(maze_maker, snake, sounds)
 
 #maze = maze_maker.first_maze()
 
+###############################################################################
 # Main Game Loop
+###############################################################################
 while True:
 	# Wait until time has passed before drawing the screen again.
 	pygame.time.Clock().tick(fps)
@@ -73,6 +79,11 @@ while True:
 					snake.direction = DIRECTION_RIGHT
 
 	screen.fill((0, 0, 0))
+	background_text = bgfont.render("Slither!", False, (0, 32, 6))
+	screen.blit(background_text, (
+		(screen_size[0] - background_text.get_rect().width)/ 2, 
+		(screen_size[1] - background_text.get_rect().height) /2)
+	)
 
 	# Move the snake.
 	# if game.cooldown.expired:

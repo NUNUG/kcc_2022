@@ -6,12 +6,14 @@ from mazemaker import MazeMaker
 from pygametimefunction import pygame_time_function
 from settings import Settings
 from snake import Snake
+from sounds import Sounds
 
 class SlitherGame:
-	def __init__(self, maze_maker : MazeMaker, snake: Snake):
+	def __init__(self, maze_maker : MazeMaker, snake: Snake, sounds: Sounds):
 		self.rnd = Random()
 		self.maze_maker : MazeMaker = maze_maker
 		self.snake : Snake = snake
+		self.sounds : Sounds = sounds
 		self.game_speed : int = 0
 		self.tongue_cooldown = Cooldown(pygame_time_function, self.rnd.randint(500, 1200))
 		self.tongue_visible = False
@@ -85,6 +87,7 @@ class SlitherGame:
 		(headx, heady) = self.snake.head_position
 		(steakx, steaky) = self.steak_pos
 		if (headx == steakx) and (heady == steaky):
+			self.sounds.eat.play()
 			self.steak_count += 1
 			self.increment_level()
 	def check_tongue_visible(self):
