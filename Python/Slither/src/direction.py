@@ -1,25 +1,3 @@
-# class DirectionVector:
-# 	def __init__(self):
-# 		# self.directionIndexes = [
-# 		# 	DIRECTION_UP, 
-# 		# 	DIRECTION_DOWN, 
-# 		# 	DIRECTION_LEFT, 
-# 		# 	DIRECTION_RIGHT
-# 		# ]
-# 		self.directionVectors = [(0,-1), (0, 1), (-1, 0), (1, 0)]
-# 		self.up = self.directionVectors[DIRECTION_UP]
-# 		self.down = self.directionVectors[DIRECTION_DOWN]
-# 		self.left = self.directionVectors[DIRECTION_LEFT]
-# 		self.right = self.directionVectors[DIRECTION_RIGHT]
-# 	# def Up(self):
-# 	# 	return self.directionVectors[DIRECTION_UP]
-# 	# def Down(self):
-# 	# 	return self.directionVectors[DIRECTION_DOWN]
-# 	# def Left(self):
-# 	# 	return self.directionVectors[DIRECTION_LEFT]
-# 	# def Right(self):
-# 	# 	return self.directionVectors[DIRECTION_RIGHT]
-
 DIRECTION_VECTOR_UP : tuple[int, int] = (0, -1)
 DIRECTION_VECTOR_DOWN : tuple[int, int] = (0, 1)
 DIRECTION_VECTOR_LEFT : tuple[int, int] = (-1, 0)

@@ -2,9 +2,11 @@ from maze import Maze
 from mazetemplates import MazeTemplates
 
 class MazeMaker:
+	"""This class will provide us a series of Maze objects from our maze templates."""
 	MAZE_WIDTH : int = 80
 	MAZE_HEIGHT : int = 50
 	def __init__(self):
+		"""Set up the MazeMaker object."""
 		self.maze_templates : MazeTemplates = MazeTemplates()
 		self.maze_number : int = self.maze_templates.maze_count() - 1
 		self.maze : list[int]  = None
@@ -15,10 +17,3 @@ class MazeMaker:
 		#maze = self.maze_templates.render_maze(template)
 		maze = Maze(template)
 		return maze
-	# def initial_position(self):
-	# 	"""Returns the position of the snake's head at the beginning of a maze."""
-	# 	for row_num in range(MazeMaker.MAZE_HEIGHT):
-	# 		for col_num in range(MazeMaker.MAZE_WIDTH):
-	# 			if (self.maze[row_num][col_num] == BLOCKTYPE_STARTING_POSITION):
-	# 				return (col_num, row_num)
-		raise "There is an error in the maze template.  It has no starting position."

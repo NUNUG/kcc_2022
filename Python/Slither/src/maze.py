@@ -1,4 +1,5 @@
 class Maze:
+	"""Represents a maze.  The maze data is constructed from a MazeTemplate."""
 	BLOCKTYPE_STARTING_POSITION : int = 2
 	BLOCKTYPE_WALL : int = 1
 	BLOCKTYPE_FLOOR : int = 0
@@ -55,6 +56,7 @@ class Maze:
 					self.initial_position = (col_num, row_num)
 
 	def get_block(self, x : int, y : int):
+		"""Returns the type of the block at the given coordinate.  This is useful to reference blocks as (x,y) instead of [row][col], which is backward"""
 		# Maze data is stored as [row][col].  
 		if y <= self.maze_height - 1:
 			if x <= self.maze_width - 1:

@@ -1,13 +1,15 @@
 class Settings:
+	"""These are game settings.  You can change these to adjust the dynamics of the game."""
 	PRIMARY_DELAY_MS : int = 200
 	INITIAL_SIZE : int = 10
 	SCALE : int = 4
 	BLOCK_SIZE : int = 8
 	STEAKS_PER_MAZE : int = 5
-	SPEEDUP_ON_LEVELUP : int = 100
+	SPEEDUP_ON_LEVELUP : int = 10
 	GROWTH_ON_LEVELUP : int = 15
 
 class Paths:
+	"""These are the locations on disk of all the game assets, such as sounds and graphics."""
 	GRAPHICS_STEAK_PATH : str = "../assets/graphics/steak.png"
 	GRAPHICS_BLOCK_PATH : str = "../assets/graphics/block.png"
 

@@ -2,9 +2,12 @@ from direction import DIRECTION_VECTORS
 
 
 class Snake:
+	"""This class represents the blocks that make up the snake's body, head and tail."""
 	def __init__(self, size, max_size, position, direction):
+		"""Set up the snake."""
 		self.reset(size, max_size, position, direction)
 	def reset(self, size : int, max_size: int, position : tuple[int, int], direction : int):
+		"""Sets the snake at its starting position, size and direction."""
 		self.size : int = size
 		self.max_size : int = max_size
 		self.head_position : tuple[int, int] = position
@@ -12,6 +15,9 @@ class Snake:
 		self.direction : int = direction
 		self.blocks : list[tuple[int, int], int] = [(position, direction)]
 	def move(self, direction):
+		"""The snake can move one block in the given direction.  
+		If it's already full grown, the tail will follow.  
+		Otherwise, it will grow one block as well."""
 		# Add a new section for the head in the new location.
 		#old_head_position = self.head_position
 		direction_vector = DIRECTION_VECTORS[direction]
@@ -33,4 +39,7 @@ class Snake:
 		
 
 	def grow(self, grow_by):
+		"""Make the snake grow, but not all at once.  This sets its maximum size, 
+		but it will still have to grow one block at a time using the .move() 
+		method until it reaches this new maximum size."""
 		self.max_size = self.max_size + grow_by
