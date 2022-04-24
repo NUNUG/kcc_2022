@@ -1,0 +1,30 @@
+class Settings:
+	PRIMARY_DELAY_MS : int = 500
+	STEAKS_PER_ROUND : int = 5
+	INITIAL_SIZE : int = 10
+	SCALE : int = 2
+	BLOCK_SIZE : int = 8
+
+class Paths:
+	GRAPHICS_STEAK_PATH : str = "../assets/graphics/steak.png"
+	GRAPHICS_BLOCK_PATH : str = "../assets/graphics/block.png"
+
+	GRAPHICS_BODY_UP_PATH : str = "../assets/graphics/body-up.png"
+	GRAPHICS_BODY_DOWN_PATH : str = "../assets/graphics/body-down.png"
+	GRAPHICS_BODY_LEFT_PATH : str = "../assets/graphics/body-left.png"
+	GRAPHICS_BODY_RIGHT_PATH : str = "../assets/graphics/body-right.png"
+
+	GRAPHICS_HEAD_UP_PATH : str = "../assets/graphics/head-up.png"
+	GRAPHICS_HEAD_DOWN_PATH : str = "../assets/graphics/head-down.png"
+	GRAPHICS_HEAD_LEFT_PATH : str = "../assets/graphics/head-left.png"
+	GRAPHICS_HEAD_RIGHT_PATH : str = "../assets/graphics/head-right.png"
+
+	GRAPHICS_TONGUE_UP_PATH : str = "../assets/graphics/tongue-up.png"
+	GRAPHICS_TONGUE_DOWN_PATH : str = "../assets/graphics/tongue-down.png"
+	GRAPHICS_TONGUE_LEFT_PATH : str = "../assets/graphics/tongue-left.png"
+	GRAPHICS_TONGUE_RIGHT_PATH : str = "../assets/graphics/tongue-right.png"
+
+	GRAPHICS_TAIL_UP_PATH : str = "../assets/graphics/tail-up.png"
+	GRAPHICS_TAIL_DOWN_PATH : str = "../assets/graphics/tail-down.png"
+	GRAPHICS_TAIL_LEFT_PATH : str = "../assets/graphics/tail-left.png"
+	GRAPHICS_TAIL_RIGHT_PATH : str = "../assets/graphics/tail-right.png"
