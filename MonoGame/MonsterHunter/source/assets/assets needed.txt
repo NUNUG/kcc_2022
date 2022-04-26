@@ -1,0 +1,22 @@
+---- Tiles
+trees
+leaves
+dirt underfoot
+statues
+mountains
+broken stone building parts
+rounded shaded edges of brick patterns for edges of buildings
+curtains
+garboyles
+HUD
+lightning bolts
+pillars with statues holding them up against their backs, Atlas style.
+artifact pedestals (where you find an orb / relic / cube, for example)
+
+---- Sprites
+Hearts (large and small).  Animations?  3D only?
+
+---- Music
+If we only have one scene, we only have one music track.  Definitely need a boss fight, so we need two scenes and two tracks.
+- Adventure track
+- Boss track
