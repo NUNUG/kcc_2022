@@ -1,8 +1,11 @@
 ###############################################################################
-# Slither Step 0 - The final game
+# Slither Step 14
 ###############################################################################
-# To run, type:
-# python slither.py
+# Previous step:
+# - Animate the tongue.
+#
+# What to do now?
+# - Add background text.
 ###############################################################################
 
 # PyGame imports
@@ -86,13 +89,8 @@ while True:
 	# Draw a black background.
 	screen.fill((0, 0, 0))
 
-	background_text = bgfont.render("Slither!", False, (0, 32, 6))
-	screen.blit(background_text, (
-		(screen_size[0] - background_text.get_rect().width)/ 2, 
-		(screen_size[1] - background_text.get_rect().height) /2)
-	)
-
 	# Move the snake.
+	# We have to create this method in the Game class!
 	game.tick()
 
 	if game.game_over:
@@ -129,7 +127,6 @@ while True:
 				(x, y) = position
 				image = graphics.body[direction]
 				draw_block(x, y, image)
-
 		# ...the tail
 		(position, direction) = snake.blocks[0]
 		(x, y) = position

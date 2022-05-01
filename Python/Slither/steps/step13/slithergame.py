@@ -109,11 +109,9 @@ class SlitherGame:
 		"""If enough time has passed, we will move the snake.
 		We then check to see if he hit a wall, ate the steak or bit himself!"""
 		if not self.game_over:
-			self.check_tongue_visible()
 			if self.cooldown.expired():
 				self.snake.move(self.snake.direction)
 				self.check_hit_wall()
 				self.check_bit_self()
 				self.check_ate_steak()
 				self.cooldown.reset()
-

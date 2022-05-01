@@ -1,8 +1,11 @@
 ###############################################################################
-# Slither Step 0 - The final game
+# Slither Step 10
 ###############################################################################
-# To run, type:
-# python slither.py
+# Previous step:
+# - Control the snake (arrow keys)
+#
+# What to do now?
+# - Detect wall collisions / Game over
 ###############################################################################
 
 # PyGame imports
@@ -30,8 +33,6 @@ screen_rows = 25
 screen_columns = 40
 screen_size = (screen_columns * Settings.BLOCK_SIZE * Settings.SCALE, screen_rows * Settings.BLOCK_SIZE * Settings.SCALE)
 screen = pygame.display.set_mode([screen_size[0], screen_size[1]])
-font = pygame.font.Font(Paths.FONT_PATH, 96)
-bgfont = pygame.font.Font(Paths.FONT_PATH, 192)
 pygame.display.set_caption("Slither!")
 
 # Game speed
@@ -86,68 +87,44 @@ while True:
 	# Draw a black background.
 	screen.fill((0, 0, 0))
 
-	background_text = bgfont.render("Slither!", False, (0, 32, 6))
-	screen.blit(background_text, (
-		(screen_size[0] - background_text.get_rect().width)/ 2, 
-		(screen_size[1] - background_text.get_rect().height) /2)
-	)
-
 	# Move the snake.
+	# We have to create this method in the Game class!
 	game.tick()
 
-	if game.game_over:
-		screen.fill((192, 32, 32))
-		game_over_text = font.render("GAME OVER", True, (0, 0, 0))
-		screen.blit(game_over_text, (
-			(screen_size[0] - game_over_text.get_rect().width)/ 2, 
-			(screen_size[1] - game_over_text.get_rect().height) /2)
-		)
-	else:
+	# Draw the maze
+	maze = game.maze
+	for x in range(maze.maze_width):
+		for y in range(maze.maze_height):
+			block = maze.get_block(x, y)
+			if block == maze.BLOCKTYPE_WALL:
+				# Draw a wall.  We draw a block every 8 pixels (because blocks 
+				# are 8x8), but then we double it because scale is 2x.
+				draw_block(x, y, graphics.wall)
 
-		# Draw the maze
-		maze = game.maze
-		for x in range(maze.maze_width):
-			for y in range(maze.maze_height):
-				block = maze.get_block(x, y)
-				if block == maze.BLOCKTYPE_WALL:
-					# Draw a wall.  We draw a block every 8 pixels (because blocks 
-					# are 8x8), but then we double it because scale is 2x.
-					draw_block(x, y, graphics.wall)
+	# Draw the steak
+	(x, y) = game.steak_pos
+	draw_block(x, y, graphics.steak)
 
-		# Draw the steak
-		(x, y) = game.steak_pos
-		draw_block(x, y, graphics.steak)
-
-		# Draw the snake
-		# ... the body
-		first_block_num = 0
-		last_block_num = len(snake.blocks) - 1
-		for block_num in range(last_block_num):
-			block = snake.blocks[block_num]
-			if (block_num != first_block_num) and (block_num != last_block_num):
-				(position, direction) = block
-				(x, y) = position
-				image = graphics.body[direction]
-				draw_block(x, y, image)
-
-		# ...the tail
-		(position, direction) = snake.blocks[0]
-		(x, y) = position
-		draw_block(x, y, graphics.tail[direction])
-
-		# ...the head
-		(position, direction) = snake.blocks[len(snake.blocks) - 1]
-		(x, y) = position
-		draw_block(x, y, graphics.head[direction])
-
-		# ...the tongue
-		if game.tongue_visible:
-			(position, direction) = snake.blocks[len(snake.blocks) - 1]
+	# # Draw the snake
+	# ... the body
+	first_block_num = 0
+	last_block_num = len(snake.blocks) - 1
+	for block_num in range(last_block_num):
+		block = snake.blocks[block_num]
+		if (block_num != first_block_num) and (block_num != last_block_num):
+			(position, direction) = block
 			(x, y) = position
-			(vx, vy) = DIRECTION_VECTORS[snake.head_direction]
-			tx = x + vx
-			ty = y + vy
-			draw_block(tx, ty, graphics.tongue[direction])
+			image = graphics.body[direction]
+			draw_block(x, y, image)
+	# ...the tail
+	(position, direction) = snake.blocks[0]
+	(x, y) = position
+	draw_block(x, y, graphics.tail[direction])
+
+	# ...the head
+	(position, direction) = snake.blocks[len(snake.blocks) - 1]
+	(x, y) = position
+	draw_block(x, y, graphics.head[direction])
 
 	# Show our screen on the monitor.
 	pygame.display.update()

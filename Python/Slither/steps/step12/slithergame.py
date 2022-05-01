@@ -89,14 +89,14 @@ class SlitherGame:
 		(headx, heady) = self.snake.head_position
 		if self.in_snake_body(headx, heady):
 			self.game_over = True
-	def check_ate_steak(self):
-		"""Determines if the snake's head has hit a steak.  If it did, kudos!  Go to next steak or next level."""
-		(headx, heady) = self.snake.head_position
-		(steakx, steaky) = self.steak_pos
-		if (headx == steakx) and (heady == steaky):
-			self.sounds.eat.play()
-			self.steak_count += 1
-			self.increment_level()
+	#def check_ate_steak(self):
+	#	"""Determines if the snake's head has hit a steak.  If it did, kudos!  Go to next steak or next level."""
+	#	(headx, heady) = self.snake.head_position
+	#	(steakx, steaky) = self.steak_pos
+	#	if (headx == steakx) and (heady == steaky):
+	#		self.sounds.eat.play()
+	#		self.steak_count += 1
+	#		self.increment_level()
 	def check_tongue_visible(self):
 		"""This animates the tongue.  It stays in or out of the mouth for random periods
 		of time using a cooldown.  Once the cooldown expires, we move it either in or out, 
@@ -109,11 +109,8 @@ class SlitherGame:
 		"""If enough time has passed, we will move the snake.
 		We then check to see if he hit a wall, ate the steak or bit himself!"""
 		if not self.game_over:
-			self.check_tongue_visible()
 			if self.cooldown.expired():
 				self.snake.move(self.snake.direction)
 				self.check_hit_wall()
 				self.check_bit_self()
-				self.check_ate_steak()
 				self.cooldown.reset()
-

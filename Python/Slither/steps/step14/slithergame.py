@@ -116,4 +116,3 @@ class SlitherGame:
 				self.check_bit_self()
 				self.check_ate_steak()
 				self.cooldown.reset()
-

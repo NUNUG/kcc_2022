@@ -1,8 +1,11 @@
 ###############################################################################
-# Slither Step 0 - The final game
+# Slither Step 12
 ###############################################################################
-# To run, type:
-# python slither.py
+# Previous step:
+# - Detect snake collisions.
+#
+# What to do now?
+# - Detect steak collisions.
 ###############################################################################
 
 # PyGame imports
@@ -86,13 +89,8 @@ while True:
 	# Draw a black background.
 	screen.fill((0, 0, 0))
 
-	background_text = bgfont.render("Slither!", False, (0, 32, 6))
-	screen.blit(background_text, (
-		(screen_size[0] - background_text.get_rect().width)/ 2, 
-		(screen_size[1] - background_text.get_rect().height) /2)
-	)
-
 	# Move the snake.
+	# We have to create this method in the Game class!
 	game.tick()
 
 	if game.game_over:
@@ -118,7 +116,7 @@ while True:
 		(x, y) = game.steak_pos
 		draw_block(x, y, graphics.steak)
 
-		# Draw the snake
+		# # Draw the snake
 		# ... the body
 		first_block_num = 0
 		last_block_num = len(snake.blocks) - 1
@@ -129,7 +127,6 @@ while True:
 				(x, y) = position
 				image = graphics.body[direction]
 				draw_block(x, y, image)
-
 		# ...the tail
 		(position, direction) = snake.blocks[0]
 		(x, y) = position
@@ -139,15 +136,6 @@ while True:
 		(position, direction) = snake.blocks[len(snake.blocks) - 1]
 		(x, y) = position
 		draw_block(x, y, graphics.head[direction])
-
-		# ...the tongue
-		if game.tongue_visible:
-			(position, direction) = snake.blocks[len(snake.blocks) - 1]
-			(x, y) = position
-			(vx, vy) = DIRECTION_VECTORS[snake.head_direction]
-			tx = x + vx
-			ty = y + vy
-			draw_block(tx, ty, graphics.tongue[direction])
 
 	# Show our screen on the monitor.
 	pygame.display.update()
