@@ -9,6 +9,8 @@ namespace GorillaBas.GameCode
 		public bool Active { get; private set; }
 		public (int X, int Y) ImpactOffset => impactOffsets[currentImpactOffsetIndex];
 		public float Rotation { get; set; }
+		public Action AfterExplosion { get; set; }
+
 
 		private Cooldown cooldown;
 		private (int X, int Y)[] impactOffsets;
@@ -52,7 +54,11 @@ namespace GorillaBas.GameCode
 				Rotation = rnd.Next(314 * 2) / 100.0f;
 				cooldown.Reset(gameTime);
 				if (currentImpactOffsetIndex > impactOffsets.Length - 1)
+				{
+					// Done exploding.
+					AfterExplosion?.Invoke();
 					Reset();
+				}
 			}
 		}
 	}

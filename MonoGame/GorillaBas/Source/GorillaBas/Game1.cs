@@ -14,14 +14,6 @@ namespace GorillaBas
 		private GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
 
-		//private (int Width, int Height) BaseScreenDimensions;
-		//private int ScreenScale = 8;
-		//private (int Width, int Height) ScreenDimensions;
-		//private bool IsFullScreen = false;
-
-		// Builders and content
-		//private GameContent GameContent;
-		//private GameStorage GameStorage;
 		private GameSettings GameSettings;
 		private GameFunctions GameFunctions;
 		private LoadedContent LoadedContent;
@@ -50,16 +42,23 @@ namespace GorillaBas
 
 			GameSettings = new GameSettings();
 			GameFunctions = new GameFunctions();
-			Explosion = new ExplosionData();
 			previousBananas = new List<(int X, int Y)>();
 			rnd = new Random();
 
 			Firing = false;
 		}
 
+		private void NewPlayfield()
+		{
+			Explosion = new ExplosionData();
+			LoadedContent.Buildings = GameFunctions.GenerateBuildings(GameSettings);
+			GameFunctions.ResetGorillas(Player1, Player2, GameSettings, LoadedContent.Buildings);
+			BuildingPainter = new BuildingPainter(GameSettings, LoadedContent, GraphicsDevice, spriteBatch);
+		}
+
 		protected override void Initialize()
 		{
-			// Set the screen resolution.  I should be able to do this in the constructor, but had to move it to the Initialize() method due to a bug in Monogame 3.8.0.  It should be fixed in 3.8.1.
+			// Set the screen resolution.
 			graphics.PreferredBackBufferWidth = GameSettings.ScreenSize.Width;
 			graphics.PreferredBackBufferHeight = GameSettings.ScreenSize.Height;
 			graphics.IsFullScreen = GameSettings.FullScreen;
@@ -81,13 +80,12 @@ namespace GorillaBas
 			LoadedContent.SplosionImage = Content.Load<Texture2D>("sprites/splosion");
 			LoadedContent.GorillaImage = Content.Load<Texture2D>("sprites/gorilla");
 			LoadedContent.BananaImage = Content.Load<Texture2D>("sprites/bigbanana");
-			LoadedContent.Buildings = GameFunctions.GenerateBuildings(GameSettings);
-			LoadedContent.Gorillas = GameFunctions.CreateGorillas(GameSettings, LoadedContent.Buildings);
+			LoadedContent.Gorillas = GameFunctions.CreateGorillas(GameSettings);
 			Player1 = LoadedContent.Gorillas.LeftGorilla;
 			Player2 = LoadedContent.Gorillas.RightGorilla;
 			Players = (Player1, Player2);
 
-			BuildingPainter = new BuildingPainter(GameSettings, LoadedContent, GraphicsDevice, spriteBatch);
+			NewPlayfield();
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -113,14 +111,22 @@ namespace GorillaBas
 				Banana.ApplyGravity();
 
 				// If the banana goes out of bounds, end the turn.  Don't let it fall for eternity!
-				if (Banana.Area.Top > GameSettings.ScreenSize.Height)
+				bool bananaIsInBounds =
+				(
+					Banana.Area.Top < GameSettings.ScreenSize.Height
+					&& Banana.Area.Left > 0
+					&& Banana.Area.Left < GameSettings.ScreenSize.Width
+				);
+
+				if (!bananaIsInBounds)
 				{
 					Firing = false;
 					NextTurn();
 				}
 
-				if (previousBananas.Count < 10000)
-					previousBananas.Add(((int)Banana.Position.X, (int)Banana.Position.Y));
+				if (GameSettings.Debug)
+					if (previousBananas.Count < 10000)
+						previousBananas.Add(((int)Banana.Position.X, (int)Banana.Position.Y));
 
 				CheckForImpact(gameTime);
 			}
@@ -181,7 +187,7 @@ namespace GorillaBas
 			previousBananas.Clear();
 			Firing = true;
 			(int X, int y) position = (Players.CurrentPlayer.Area.Center.X, Players.CurrentPlayer.Area.Top);
-			//(float X, float Y) trajectory = (1.0f, 1.0f);
+
 			Banana = new BananaData(
 				position,
 				GameSettings.BananaSize,
@@ -203,6 +209,13 @@ namespace GorillaBas
 			if (isOverlapped)
 			{
 				Firing = false;
+
+				if (isOverlappedWithGorilla)
+				{
+					// The player has scored by hitting their opponent.
+					// When finished exploding, create a new playfield.
+					Explosion.AfterExplosion = () => NewPlayfield();
+				}
 				Explosion.Activate(gameTime);
 
 				if (isOverlappedWithGorilla)
@@ -213,8 +226,8 @@ namespace GorillaBas
 						// GAME OVER!
 					}
 				}
-
 				NextTurn();
+				
 			}
 		}
 
@@ -315,7 +328,6 @@ namespace GorillaBas
 				if (Banana != null)
 				{
 					string debugText = $"({Banana.Area.X}, {Banana.Area.Y}, {Banana.Area.Width}, {Banana.Area.Height})";
-
 					Vector2 upperLeft = new Vector2(0, GameSettings.ScreenSize.Height - 20);
 
 					spriteBatch.Draw(Pixel.OfColor(Color.Black), new Rectangle(

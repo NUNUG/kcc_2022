@@ -23,6 +23,11 @@ namespace GorillaBas.GameCode
 		public GorillaData(string name, Rectangle area, float angle, int directionModifier, float velocity)
 		{
 			Name = name;
+			Reset(area, angle, directionModifier, velocity);
+		}
+
+		public void Reset(Rectangle area, float angle, int directionModifier, float velocity)
+		{
 			Area = area;
 			Angle = angle;
 			DirectionModifier = directionModifier;

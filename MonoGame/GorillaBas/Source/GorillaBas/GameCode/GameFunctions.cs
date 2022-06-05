@@ -34,7 +34,8 @@ namespace GorillaBas.GameCode
 			return result;
 		}
 
-		public (GorillaData leftGorilla, GorillaData rightGorilla) CreateGorillas(GameSettings gameSettings, List<Building> buildings)
+		public (GorillaData leftGorilla, GorillaData rightGorilla) ResetGorillas(GorillaData leftGorilla, GorillaData rightGorilla,
+			GameSettings gameSettings, List<Building> buildings)
 		{
 			// Left gorilla belongs on the left half, right gorilla belongs on the right half.
 			int middleBuilding = buildings.Count / 2;
@@ -46,7 +47,7 @@ namespace GorillaBas.GameCode
 			int left2 = middleBuilding - 1;
 			int right1 = middleBuilding + 1;
 			int right2 = buildings.Count - 1;
-			
+
 			int leftBuildingIndex = rnd.Next(left1, left2 + 1) - 1;
 			int rightBuildingIndex = rnd.Next(right1, right2 + 1) - 1;
 
@@ -58,26 +59,42 @@ namespace GorillaBas.GameCode
 			(int X, int Y) leftGorillaPosition = (leftGorillaCenter.X - gameSettings.GorillaSize / 2, leftBuilding.Area.Top - gameSettings.GorillaSize);
 			(int X, int Y) rightGorillaPosition = (rightGorillaCenter.X - gameSettings.GorillaSize / 2, rightBuilding.Area.Top - gameSettings.GorillaSize);
 
-			return (
-				// Left Gorilla
-				new GorillaData()
-				{
-					Name = "Player 1",
-					Area = new Rectangle(leftGorillaPosition.X, leftGorillaPosition.Y, gameSettings.GorillaSize, gameSettings.GorillaSize),
-					Angle = gameSettings.InitialAngle,
-					DirectionModifier = 1,
-					Velocity = gameSettings.InitialVelocity
-				},
-				// Right Gorilla
-				new GorillaData()
-				{
-					Name = "Player 2",
-					Area = new Rectangle(rightGorillaPosition.X, rightGorillaPosition.Y, gameSettings.GorillaSize, gameSettings.GorillaSize),
-					Angle = gameSettings.InitialAngle, // Player two throws the banana in the opposite direction, so we make it a negative angle.
-					DirectionModifier = -1,
-					Velocity = gameSettings.InitialVelocity
-				}
-			);
+			// Left Gorilla
+			leftGorilla.Area = new Rectangle(leftGorillaPosition.X, leftGorillaPosition.Y, gameSettings.GorillaSize, gameSettings.GorillaSize);
+			leftGorilla.Angle = gameSettings.InitialAngle;
+			leftGorilla.DirectionModifier = 1;
+			leftGorilla.Velocity = gameSettings.InitialVelocity;
+			// Right Gorilla
+			rightGorilla.Area = new Rectangle(rightGorillaPosition.X, rightGorillaPosition.Y, gameSettings.GorillaSize, gameSettings.GorillaSize);
+			rightGorilla.Angle = gameSettings.InitialAngle; // Player two throws the banana in the opposite direction, so we make it a negative angle.
+			rightGorilla.DirectionModifier = -1;
+			rightGorilla.Velocity = gameSettings.InitialVelocity;
+
+			return (leftGorilla, rightGorilla);
+		}
+
+		public (GorillaData leftGorilla, GorillaData rightGorilla) CreateGorillas(GameSettings gameSettings/*, List<Building> buildings*/)
+		{
+			// Left Gorilla
+			var leftGorilla = new GorillaData()
+			{
+				Name = "Player 1",
+				Area = new Rectangle(0, 0, 0, 0),
+				Angle = gameSettings.InitialAngle,
+				DirectionModifier = 1,
+				Velocity = gameSettings.InitialVelocity
+			};
+			// Right Gorilla
+			var rightGorilla = new GorillaData()
+			{
+				Name = "Player 2",
+				Area = new Rectangle(0, 0, 0, 0),
+				Angle = gameSettings.InitialAngle,
+				DirectionModifier = -1,	// Player2 throws in the opposite direction, so we want to invert the X direction for them.
+				Velocity = gameSettings.InitialVelocity
+			};
+
+			return (leftGorilla, rightGorilla);
 		}
 
 		private bool CheckForKeyPress(Keys keyToCheckFor)
@@ -106,66 +123,8 @@ namespace GorillaBas.GameCode
 			return result;
 		}
 
-		//public bool DoRectanglesOverlap(Rectangle rectangle1, Rectangle rectangle2)
-		//{
-		//	// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
-		//	bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
-		//		|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right);
-
-		//	// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
-		//	bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
-		//		|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom);
-
-		//	// If there is both horizontal and vertical overlap, the rectangles are overlapped.
-		//	return xOverlap && yOverlap;
-		//}
-
-		//public bool DoRectanglesOverlap(Rectangle rectangle1, Rectangle rectangle2)
-		//{
-		//	// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
-		//	bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
-		//		|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right)
-		//		|| (rectangle2.Left < rectangle1.Left && rectangle1.Left < rectangle2.Right)
-		//		|| (rectangle2.Left < rectangle1.Right && rectangle1.Right < rectangle2.Right);
-
-		//	// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
-		//	bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
-		//		|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom)
-		//		|| (rectangle2.Top < rectangle1.Top && rectangle1.Top < rectangle2.Bottom)
-		//		|| (rectangle2.Top < rectangle1.Bottom && rectangle1.Bottom < rectangle2.Bottom);
-
-		//	// If there is both horizontal and vertical overlap, the rectangles are overlapped.
-		//	return xOverlap && yOverlap;
-		//}
-
 		public bool BananaCollidedWith(Rectangle bananaRectangle, Rectangle rectangle2)
 		{
-			//// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
-			//bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
-			//	|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right);
-
-			//// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
-			//bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
-			//	|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom);
-
-			//// If there is both horizontal and vertical overlap, the rectangles are overlapped.
-			//return xOverlap && yOverlap;
-
-			//// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
-			//bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
-			//	|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right)
-			//	|| (rectangle2.Left < rectangle1.Left && rectangle1.Left < rectangle2.Right)
-			//	|| (rectangle2.Left < rectangle1.Right && rectangle1.Right < rectangle2.Right);
-
-			//// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
-			//bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
-			//	|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom)
-			//	|| (rectangle2.Top < rectangle1.Top && rectangle1.Top < rectangle2.Bottom)
-			//	|| (rectangle2.Top < rectangle1.Bottom && rectangle1.Bottom < rectangle2.Bottom);
-
-			//// If there is both horizontal and vertical overlap, the rectangles are overlapped.
-			//return xOverlap && yOverlap;
-
 			bool xOverlap = (bananaRectangle.Left > rectangle2.Left && bananaRectangle.Left < rectangle2.Right);
 			bool yOverlap = (bananaRectangle.Top > rectangle2.Top && bananaRectangle.Top < rectangle2.Bottom);
 
