@@ -80,6 +80,7 @@ namespace GorillaBas
 			LoadedContent.SplosionImage = Content.Load<Texture2D>("sprites/splosion");
 			LoadedContent.GorillaImage = Content.Load<Texture2D>("sprites/gorilla");
 			LoadedContent.BananaImage = Content.Load<Texture2D>("sprites/bigbanana");
+			LoadedContent.GuideArrow = Content.Load<Texture2D>("sprites/guidearrow");
 			LoadedContent.Gorillas = GameFunctions.CreateGorillas(GameSettings);
 			Player1 = LoadedContent.Gorillas.LeftGorilla;
 			Player2 = LoadedContent.Gorillas.RightGorilla;
@@ -138,7 +139,6 @@ namespace GorillaBas
 			base.Update(gameTime);
 		}
 
-
 		protected override void Draw(GameTime gameTime)
 		{
 			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -149,7 +149,10 @@ namespace GorillaBas
 			DrawGorillas();
 
 			if (Firing)
+			{
 				DrawBanana();
+				DrawBananaGuide();
+			}
 
 			if (Explosion.Active)
 			{
@@ -227,7 +230,6 @@ namespace GorillaBas
 					}
 				}
 				NextTurn();
-				
 			}
 		}
 
@@ -249,6 +251,19 @@ namespace GorillaBas
 				new Vector2(LoadedContent.BananaImage.Width / 2, LoadedContent.BananaImage.Height / 2),
 				SpriteEffects.None,
 				0);
+		}
+
+		private void DrawBananaGuide()
+		{
+			// If the banana is off the screen, draw an arrow on the top edge of the screen to show where it is.
+
+			if (Banana.Area.Y < 0)
+			{
+				var image = LoadedContent.GuideArrow;
+				(int Width, int Height) size = (GameSettings.GuideArrowSize, GameSettings.GuideArrowSize);
+				var destRect = new Rectangle(Banana.Area.X - size.Width / 2, 0, size.Width, size.Height);
+				spriteBatch.Draw(image, destRect, Color.White);
+			}
 		}
 
 		private void DrawText()

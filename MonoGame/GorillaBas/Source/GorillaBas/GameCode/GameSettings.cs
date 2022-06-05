@@ -18,5 +18,6 @@ namespace GorillaBas.GameCode
 		public int GorillaSize => 64;
 		public int BananaSize => 24;
 		public int MaxScore => 10;
+		public int GuideArrowSize => 15;
 	}
 }
