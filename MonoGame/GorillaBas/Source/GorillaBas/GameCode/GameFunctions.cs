@@ -65,6 +65,7 @@ namespace GorillaBas.GameCode
 					Name = "Player 1",
 					Area = new Rectangle(leftGorillaPosition.X, leftGorillaPosition.Y, gameSettings.GorillaSize, gameSettings.GorillaSize),
 					Angle = gameSettings.InitialAngle,
+					DirectionModifier = 1,
 					Velocity = gameSettings.InitialVelocity
 				},
 				// Right Gorilla
@@ -72,7 +73,8 @@ namespace GorillaBas.GameCode
 				{
 					Name = "Player 2",
 					Area = new Rectangle(rightGorillaPosition.X, rightGorillaPosition.Y, gameSettings.GorillaSize, gameSettings.GorillaSize),
-					Angle = gameSettings.InitialAngle,
+					Angle = gameSettings.InitialAngle, // Player two throws the banana in the opposite direction, so we make it a negative angle.
+					DirectionModifier = -1,
 					Velocity = gameSettings.InitialVelocity
 				}
 			);

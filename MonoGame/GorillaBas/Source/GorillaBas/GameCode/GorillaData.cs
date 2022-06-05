@@ -12,6 +12,7 @@ namespace GorillaBas.GameCode
 		public string Name { get; set; }
 		public Rectangle Area { get; set; }
 		public float Angle { get; set; }
+		public int DirectionModifier { get; set; }
 		public float Velocity { get; set; }
 		public int Score { get; set; }
 
@@ -19,11 +20,12 @@ namespace GorillaBas.GameCode
 		{
 		}
 
-		public GorillaData(string name, Rectangle area, float angle, float velocity)
+		public GorillaData(string name, Rectangle area, float angle, int directionModifier, float velocity)
 		{
 			Name = name;
 			Area = area;
 			Angle = angle;
+			DirectionModifier = directionModifier;
 			Velocity = velocity;
 		}
 	}

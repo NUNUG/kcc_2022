@@ -17,6 +17,7 @@ namespace GorillaBas.GameCode
 		public float InitialVelocity => 50;
 		public float Gravity => 9.8f;
 		public int GorillaSize => 64;
-		public int BananaSize => 8;
+		public int BananaSize => 16;
+		public int MaxScore => 10;
 	}
 }

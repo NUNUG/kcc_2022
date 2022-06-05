@@ -18,42 +18,35 @@ namespace GorillaBas.GameCode
 		public int Size { get; set; }
 		public float Rotation { get; set; }
 
-
-		public (float X, float Y) TrajectoryFrom(float angle, float velocity)
+		public (float X, float Y) TrajectoryFrom(float angleInDegrees, float velocity)
 		{
 			// SOH CAH TOA
 			// Sin(a) = O/H
 			// Cos(a) = A/H
 			// Tan(a) = O/A
 
-			var xdistance = 1.0f;
-			var ratio = Math.Tan(angle);
-			float ydistance = Convert.ToSingle(ratio / xdistance);  // ydistance is technically the same as ratio because xdistance is 1.  Just showing my work.
+			float hypotenuse = 1.0f;
 
-			//float scale = 1000;
-			//return (xdistance * scale, ydistance * scale);
-			//return (xdistance * velocity, ydistance * velocity);
-			return (xdistance, -1 * ydistance);
+			// cos(a) = x / h : x = h * cos(a) 
+			// sin(a) = y / h : y = h * sin(a).
+
+			var angleInRadians = 2 * Math.PI * ((angleInDegrees + 180) % 360)/ 360.0f;
+			var x = (float)Math.Cos(angleInRadians) * hypotenuse;
+			var y = (float)Math.Sin(angleInRadians) * hypotenuse;
+
+			return (x * velocity * 0.01f, y * velocity * 0.01f * -1);
 		}
 
-		//public BananaData((float X, float Y) position, int size, (float X, float Y) trajectory, float gravity)
-		//{
-		//	Position = position;
-		//	Area = new Rectangle(Convert.ToInt32(position.X), Convert.ToInt32(position.Y), size, size);
-		//	Gravity = gravity;
-		//	Trajectory = trajectory;
-		//}
-
-		public BananaData((float X, float Y) position, int size, float angle, float velocity, float gravity)
+		public BananaData((float X, float Y) position, int size, float angleInDegrees, int directionModifier, float velocity, float gravity)
 		{
 			Size = size;
 			Position = position;
 			UpdateArea();
 			Gravity = gravity;
-			Angle = angle;
+			Angle = angleInDegrees;
 			Velocity = velocity;
-			//Trajectory = trajectory;
-			Trajectory = TrajectoryFrom(angle, -1 * velocity);
+			Trajectory = TrajectoryFrom(angleInDegrees, -1 * velocity);
+			Trajectory = (Trajectory.X * directionModifier, Trajectory.Y);	// Reverse the direction for player 2.
 		}
 
 

@@ -112,6 +112,13 @@ namespace GorillaBas
 			{
 				Banana.ApplyGravity();
 
+				// If the banana goes out of bounds, end the turn.  Don't let it fall for eternity!
+				if (Banana.Area.Top > GameSettings.ScreenSize.Height)
+				{
+					Firing = false;
+					NextTurn();
+				}
+
 				if (previousBananas.Count < 10000)
 					previousBananas.Add(((int)Banana.Position.X, (int)Banana.Position.Y));
 
@@ -152,6 +159,12 @@ namespace GorillaBas
 
 		private void DrawGorillas()
 		{
+			if (GameSettings.Debug)
+			{
+				spriteBatch.Draw(Pixel.OfColor(Color.BlueViolet), LoadedContent.Gorillas.LeftGorilla.Area, Color.White);
+				spriteBatch.Draw(Pixel.OfColor(Color.BlueViolet), LoadedContent.Gorillas.RightGorilla.Area, Color.White);
+			}
+
 			spriteBatch.Draw(LoadedContent.GorillaImage, LoadedContent.Gorillas.LeftGorilla.Area, Color.White);
 			spriteBatch.Draw(LoadedContent.GorillaImage, LoadedContent.Gorillas.RightGorilla.Area, Color.White);
 		}
@@ -173,6 +186,7 @@ namespace GorillaBas
 				position,
 				GameSettings.BananaSize,
 				Players.CurrentPlayer.Angle,
+				Players.CurrentPlayer.DirectionModifier,
 				Players.CurrentPlayer.Velocity,
 				Gravity
 			);
@@ -190,6 +204,17 @@ namespace GorillaBas
 			{
 				Firing = false;
 				Explosion.Activate(gameTime);
+
+				if (isOverlappedWithGorilla)
+				{
+					Players.CurrentPlayer.Score++;
+					if (Players.CurrentPlayer.Score == GameSettings.MaxScore)
+					{
+						// GAME OVER!
+					}
+				}
+
+				NextTurn();
 			}
 		}
 
@@ -230,10 +255,10 @@ namespace GorillaBas
 
 			// Player2 text
 			Vector2 player2TextVector = new Vector2(GameSettings.ScreenSize.Width / 2, 0);
-			Vector2 player2NameVector = new Vector2(player1TextVector.X, player1TextVector.Y + rowHeight * 1);
-			Vector2 player2ScoreVector = new Vector2(player1TextVector.X, player1TextVector.Y + rowHeight * 2);
-			Vector2 player2AngleVector = new Vector2(player1TextVector.X, player1TextVector.Y + rowHeight * 3);
-			Vector2 player2VelocityVector = new Vector2(player1TextVector.X, player1TextVector.Y + rowHeight * 4);
+			Vector2 player2NameVector = new Vector2(player2TextVector.X, player2TextVector.Y + rowHeight * 1);
+			Vector2 player2ScoreVector = new Vector2(player2TextVector.X, player2TextVector.Y + rowHeight * 2);
+			Vector2 player2AngleVector = new Vector2(player2TextVector.X, player2TextVector.Y + rowHeight * 3);
+			Vector2 player2VelocityVector = new Vector2(player2TextVector.X, player2TextVector.Y + rowHeight * 4);
 
 			if (Players.CurrentPlayer == Player1)
 			{
