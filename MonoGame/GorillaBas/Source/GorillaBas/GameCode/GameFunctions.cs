@@ -106,7 +106,39 @@ namespace GorillaBas.GameCode
 			return result;
 		}
 
-		public bool DoRectanglesOverlap(Rectangle rectangle1, Rectangle rectangle2)
+		//public bool DoRectanglesOverlap(Rectangle rectangle1, Rectangle rectangle2)
+		//{
+		//	// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
+		//	bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
+		//		|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right);
+
+		//	// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
+		//	bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
+		//		|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom);
+
+		//	// If there is both horizontal and vertical overlap, the rectangles are overlapped.
+		//	return xOverlap && yOverlap;
+		//}
+
+		//public bool DoRectanglesOverlap(Rectangle rectangle1, Rectangle rectangle2)
+		//{
+		//	// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
+		//	bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
+		//		|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right)
+		//		|| (rectangle2.Left < rectangle1.Left && rectangle1.Left < rectangle2.Right)
+		//		|| (rectangle2.Left < rectangle1.Right && rectangle1.Right < rectangle2.Right);
+
+		//	// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
+		//	bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
+		//		|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom)
+		//		|| (rectangle2.Top < rectangle1.Top && rectangle1.Top < rectangle2.Bottom)
+		//		|| (rectangle2.Top < rectangle1.Bottom && rectangle1.Bottom < rectangle2.Bottom);
+
+		//	// If there is both horizontal and vertical overlap, the rectangles are overlapped.
+		//	return xOverlap && yOverlap;
+		//}
+
+		public bool BananaCollidedWith(Rectangle bananaRectangle, Rectangle rectangle2)
 		{
 			//// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
 			//bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
@@ -119,19 +151,24 @@ namespace GorillaBas.GameCode
 			//// If there is both horizontal and vertical overlap, the rectangles are overlapped.
 			//return xOverlap && yOverlap;
 
-			// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
-			bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
-				|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right)
-				|| (rectangle2.Left < rectangle1.Left && rectangle1.Left < rectangle2.Right)
-				|| (rectangle2.Left < rectangle1.Right && rectangle1.Right < rectangle2.Right);
+			//// If either side of the second rectangle is between the sides of the first triangle, there is a horizontal overlap.
+			//bool xOverlap = (rectangle1.Left < rectangle2.Left && rectangle2.Left < rectangle1.Right)
+			//	|| (rectangle1.Left < rectangle2.Right && rectangle2.Right < rectangle1.Right)
+			//	|| (rectangle2.Left < rectangle1.Left && rectangle1.Left < rectangle2.Right)
+			//	|| (rectangle2.Left < rectangle1.Right && rectangle1.Right < rectangle2.Right);
 
-			// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
-			bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
-				|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom)
-				|| (rectangle2.Top < rectangle1.Top && rectangle1.Top < rectangle2.Bottom)
-				|| (rectangle2.Top < rectangle1.Bottom && rectangle1.Bottom < rectangle2.Bottom);
+			//// If either top or bottom of the second rectangle is between the top and bottom of the first triangle, there is a vertical overlap.
+			//bool yOverlap = (rectangle1.Top < rectangle2.Top && rectangle2.Top < rectangle1.Bottom)
+			//	|| (rectangle1.Top < rectangle2.Bottom && rectangle2.Bottom < rectangle1.Bottom)
+			//	|| (rectangle2.Top < rectangle1.Top && rectangle1.Top < rectangle2.Bottom)
+			//	|| (rectangle2.Top < rectangle1.Bottom && rectangle1.Bottom < rectangle2.Bottom);
 
-			// If there is both horizontal and vertical overlap, the rectangles are overlapped.
+			//// If there is both horizontal and vertical overlap, the rectangles are overlapped.
+			//return xOverlap && yOverlap;
+
+			bool xOverlap = (bananaRectangle.Left > rectangle2.Left && bananaRectangle.Left < rectangle2.Right);
+			bool yOverlap = (bananaRectangle.Top > rectangle2.Top && bananaRectangle.Top < rectangle2.Bottom);
+
 			return xOverlap && yOverlap;
 		}
 	}

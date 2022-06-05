@@ -195,9 +195,9 @@ namespace GorillaBas
 		private void CheckForImpact(GameTime gameTime)
 		{
 			// Did the banana touch the opposing gorilla?
-			bool isOverlappedWithGorilla = GameFunctions.DoRectanglesOverlap(Banana.Area, Players.NextPlayer.Area);
+			bool isOverlappedWithGorilla = GameFunctions.BananaCollidedWith(Banana.Area, Players.NextPlayer.Area);
 			bool isOverlappedWithBuilding = LoadedContent.Buildings.Any(
-				building => GameFunctions.DoRectanglesOverlap(Banana.Area, building.Area));
+				building => GameFunctions.BananaCollidedWith(Banana.Area, building.Area));
 
 			bool isOverlapped = isOverlappedWithGorilla || isOverlappedWithBuilding;
 			if (isOverlapped)
@@ -240,11 +240,6 @@ namespace GorillaBas
 
 		private void DrawText()
 		{
-			// Need to output these elements:
-			// - Score
-			// - Angle
-			// - Velocity
-
 			// Player1 text
 			float rowHeight = 25.0f;
 			Vector2 player1TextVector = Vector2.Zero;
@@ -293,8 +288,6 @@ namespace GorillaBas
 					spriteBatch.Draw(Pixel.OfColor(Color.DarkRed), destRect, Color.White);
 
 				Rectangle sourceRect = LoadedContent.SplosionImage.Bounds;
-				//float rotation = 0.0f;
-				//float rotation = rnd.Next(314 * 2) / 100.0f; // Random number between 0 and 2pi radians, which is between 0 and 359 degrees.
 				float rotation = Explosion.Rotation;
 				Vector2 origin = new Vector2(width / 2, height / 2);
 
