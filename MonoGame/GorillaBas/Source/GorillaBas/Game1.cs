@@ -253,8 +253,9 @@ namespace GorillaBas
 
 		private void DrawText()
 		{
-			// Player1 text
 			float rowHeight = 25.0f;
+
+			// Player1 text
 			Vector2 player1TextVector = Vector2.Zero;
 			Vector2 player1NameVector = new Vector2(player1TextVector.X, player1TextVector.Y + rowHeight * 1);
 			Vector2 player1ScoreVector = new Vector2(player1TextVector.X, player1TextVector.Y + rowHeight * 2);
@@ -268,20 +269,29 @@ namespace GorillaBas
 			Vector2 player2AngleVector = new Vector2(player2TextVector.X, player2TextVector.Y + rowHeight * 3);
 			Vector2 player2VelocityVector = new Vector2(player2TextVector.X, player2TextVector.Y + rowHeight * 4);
 
+			 // Draw the highlight
+			Rectangle highlightRect;
+			Color highlightColor = new Color(Color.Black, 0.25f);
 			if (Players.CurrentPlayer == Player1)
 			{
-				spriteBatch.DrawString(Font, $"{Player1.Name}", player1NameVector, Color.White);
-				spriteBatch.DrawString(Font, $"Score: {Player1.Score}", player1ScoreVector, Color.White);
-				spriteBatch.DrawString(Font, $"Angle: {Player1.Angle}", player1AngleVector, Color.White);
-				spriteBatch.DrawString(Font, $"Velocity: {Player1.Velocity}", player1VelocityVector, Color.White);
+				highlightRect = new Rectangle((int)player1NameVector.X, (int)player1NameVector.Y - 5, (int)player2NameVector.X - 50, (int)rowHeight);
 			}
 			else
 			{
-				spriteBatch.DrawString(Font, $"{Player2.Name}", player2NameVector, Color.White);
-				spriteBatch.DrawString(Font, $"Score: {Player2.Score}", player2ScoreVector, Color.White);
-				spriteBatch.DrawString(Font, $"Angle: {Player2.Angle}", player2AngleVector, Color.White);
-				spriteBatch.DrawString(Font, $"Velocity: {Player2.Velocity}", player2VelocityVector, Color.White);
+				highlightRect = new Rectangle((int)player2NameVector.X, (int)player2NameVector.Y - 5, (int)GameSettings.ScreenSize.Width - (int)player2NameVector.X - 50, (int)rowHeight);
 			}
+			spriteBatch.Draw(Pixel.OfColor(highlightColor), highlightRect, Color.White);
+
+			// Draw the texts.
+			spriteBatch.DrawString(Font, $"{Player1.Name}", player1NameVector, Color.White);
+			spriteBatch.DrawString(Font, $"Score: {Player1.Score}", player1ScoreVector, Color.White);
+			spriteBatch.DrawString(Font, $"Angle: {Player1.Angle}", player1AngleVector, Color.White);
+			spriteBatch.DrawString(Font, $"Velocity: {Player1.Velocity}", player1VelocityVector, Color.White);
+
+			spriteBatch.DrawString(Font, $"{Player2.Name}", player2NameVector, Color.White);
+			spriteBatch.DrawString(Font, $"Score: {Player2.Score}", player2ScoreVector, Color.White);
+			spriteBatch.DrawString(Font, $"Angle: {Player2.Angle}", player2AngleVector, Color.White);
+			spriteBatch.DrawString(Font, $"Velocity: {Player2.Velocity}", player2VelocityVector, Color.White);
 		}
 
 		private void DrawExplosion()
