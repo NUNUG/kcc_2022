@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GorillaBas.GameCode
@@ -15,6 +16,10 @@ namespace GorillaBas.GameCode
 		public Texture2D SplosionImage { get; set; }
 		public Texture2D GuideArrow { get; set; }
 		public (GorillaData LeftGorilla, GorillaData RightGorilla) Gorillas { get; set; }
+		public SoundEffect ExplosionSound { get; set; }
+		public SoundEffect FireSound { get; set; }
+		public SoundEffect GorillaSound { get; set; }
+
 
 		public LoadedContent()
 		{

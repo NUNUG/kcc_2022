@@ -21,23 +21,23 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/Monoisome-Regular.spritefont
 
-#begin sound/invalid.wav
+#begin sounds/explosion.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sound/invalid.wav
+/build:sounds/explosion.wav
 
-#begin sound/keyclick.wav
+#begin sounds/fire.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sound/keyclick.wav
+/build:sounds/fire.wav
 
-#begin sound/keynav.wav
+#begin sounds/gorilla.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:sound/keynav.wav
+/build:sounds/gorilla.wav
 
 #begin sprites/bigbanana.png
 /importer:TextureImporter
