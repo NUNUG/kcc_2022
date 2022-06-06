@@ -21,7 +21,6 @@ namespace GorillaBas
 			GameFunctions = new GameFunctions();
 			previousBananas = new List<(int X, int Y)>();
 
-			Firing = false;
 		}
 
 		private void NewPlayfield()
@@ -42,19 +41,6 @@ namespace GorillaBas
 			graphics.ApplyChanges();
 
 			base.Initialize();
-		}
-
-		private void DrawBananaGuide()
-		{
-			// If the banana is off the screen, draw an arrow on the top edge of the screen to show where it is.
-
-			if (Banana.Area.Y < 0)
-			{
-				var image = LoadedContent.GuideArrow;
-				(int Width, int Height) size = (GameSettings.GuideArrowSize, GameSettings.GuideArrowSize);
-				var destRect = new Rectangle(Banana.Area.X - size.Width / 2, 0, size.Width, size.Height);
-				spriteBatch.Draw(image, destRect, Color.White);
-			}
 		}
 
 		private void DrawText()
@@ -104,24 +90,24 @@ namespace GorillaBas
 		{
 			if (Explosion.Active)
 			{
-				int width = LoadedContent.SplosionImage.Width;
-				int height = LoadedContent.SplosionImage.Height;
+				int width = LoadedContent.ExplosionImage.Width;
+				int height = LoadedContent.ExplosionImage.Height;
 
 				var destRect = new Rectangle(
 						Banana.Area.Left + this.Explosion.ImpactOffset.X,
 						Banana.Area.Top + this.Explosion.ImpactOffset.Y,
-						LoadedContent.SplosionImage.Width,
-						LoadedContent.SplosionImage.Height);
+						LoadedContent.ExplosionImage.Width,
+						LoadedContent.ExplosionImage.Height);
 
 				if (GameSettings.Debug)
 					spriteBatch.Draw(Pixel.OfColor(Color.DarkRed), destRect, Color.White);
 
-				Rectangle sourceRect = LoadedContent.SplosionImage.Bounds;
+				Rectangle sourceRect = LoadedContent.ExplosionImage.Bounds;
 				float rotation = Explosion.Rotation;
 				Vector2 origin = new Vector2(width / 2, height / 2);
 
 				spriteBatch.Draw(
-					LoadedContent.SplosionImage,
+					LoadedContent.ExplosionImage,
 					destRect,
 					sourceRect,
 					Color.White,
@@ -155,5 +141,31 @@ namespace GorillaBas
 			}
 		}
 
+		private void DrawBanana()
+		{
+			if (GameSettings.Debug)
+			{
+				foreach ((int X, int Y) previousBanana in previousBananas)
+				{
+					spriteBatch.Draw(LoadedContent.BananaImage, new Rectangle(previousBanana.X, previousBanana.Y, Banana.Area.Width, Banana.Area.Height), Color.White);
+				}
+			}
+			float rotation = Banana.Rotation;
+			spriteBatch.Draw(LoadedContent.BananaImage,
+				Banana.Area,
+				LoadedContent.BananaImage.Bounds,
+				Color.White,
+				rotation,
+				new Vector2(LoadedContent.BananaImage.Width / 2, LoadedContent.BananaImage.Height / 2),
+				SpriteEffects.None,
+				0);
+		}
+
+		private void NextTurn()
+		{
+			// Just swap the position of the players in the Players property.
+			(var currentPlayer, var nextPlayer) = Players;
+			Players = (nextPlayer, currentPlayer);
+		}
 	}
 }

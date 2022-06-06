@@ -60,7 +60,7 @@ namespace GorillaBas
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
 
-			if (!Firing && !Explosion.Active)
+			if (!Firing)
 			{
 				var inputState = GameFunctions.ReadInput();
 
@@ -72,33 +72,11 @@ namespace GorillaBas
 				if (inputState.SpacePressed)
 					FireBanana();
 			}
-			else if (Firing && !Explosion.Active)
+			else if (Firing)
 			{
 				Banana.ApplyGravity();
-
-				// If the banana goes out of bounds, end the turn.  Don't let it fall for eternity!
-				bool bananaIsInBounds =
-				(
-					Banana.Area.Top < GameSettings.ScreenSize.Height
-					&& Banana.Area.Left > 0
-					&& Banana.Area.Left < GameSettings.ScreenSize.Width
-				);
-
-				if (!bananaIsInBounds)
-				{
-					Firing = false;
-					NextTurn();
-				}
-
-				if (GameSettings.Debug)
-					if (previousBananas.Count < 10000)
-						previousBananas.Add(((int)Banana.Position.X, (int)Banana.Position.Y));
-
 				CheckForImpact(gameTime);
 			}
-
-			if (Explosion.Active)
-				Explosion.Update(gameTime);
 
 			base.Update(gameTime);
 		}
@@ -113,32 +91,12 @@ namespace GorillaBas
 			DrawGorillas();
 
 			if (Firing)
-			{
 				DrawBanana();
-				DrawBananaGuide();
-			}
-
-			if (Explosion.Active)
-			{
-				DrawExplosion();
-			}
 
 			DrawText();
-			DrawDebugText();
 			spriteBatch.End();
 
 			base.Draw(gameTime);
-		}
-
-		private void DrawBananaGuide()
-		{
-			if (Banana.Position.Y < 0)
-			{
-				var image = LoadedContent.GuideArrow;
-				var size = GameSettings.GuideArrowSize;
-				Rectangle destRect = new Rectangle((int)Banana.Position.X - size / 2, 0, size, size);
-				spriteBatch.Draw(image, destRect, Color.White);
-			}
 		}
 
 		private void DrawGorillas()
@@ -179,30 +137,7 @@ namespace GorillaBas
 
 			bool isOverlapped = isOverlappedWithGorilla || isOverlappedWithBuilding;
 			if (isOverlapped)
-			{
 				Firing = false;
-
-				if (isOverlappedWithGorilla)
-				{
-					// The player has scored by hitting their opponent.
-					// When finished exploding, create a new playfield.
-					Explosion.AfterExplosion = () => NewPlayfield();
-					LoadedContent.GorillaSound.Play();
-				}
-				Explosion.Activate(gameTime);
-				LoadedContent.ExplosionSound.Play();
-
-
-				if (isOverlappedWithGorilla)
-				{
-					Players.CurrentPlayer.Score++;
-					if (Players.CurrentPlayer.Score == GameSettings.MaxScore)
-					{
-						// GAME OVER!
-					}
-				}
-				NextTurn();
-			}
 		}
 	}
 }

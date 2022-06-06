@@ -90,10 +90,6 @@ namespace GorillaBas
 					NextTurn();
 				}
 
-				if (GameSettings.Debug)
-					if (previousBananas.Count < 10000)
-						previousBananas.Add(((int)Banana.Position.X, (int)Banana.Position.Y));
-
 				CheckForImpact(gameTime);
 			}
 
@@ -113,32 +109,15 @@ namespace GorillaBas
 			DrawGorillas();
 
 			if (Firing)
-			{
 				DrawBanana();
-				DrawBananaGuide();
-			}
 
 			if (Explosion.Active)
-			{
 				DrawExplosion();
-			}
 
 			DrawText();
-			DrawDebugText();
 			spriteBatch.End();
 
 			base.Draw(gameTime);
-		}
-
-		private void DrawBananaGuide()
-		{
-			if (Banana.Position.Y < 0)
-			{
-				var image = LoadedContent.GuideArrow;
-				var size = GameSettings.GuideArrowSize;
-				Rectangle destRect = new Rectangle((int)Banana.Position.X - size / 2, 0, size, size);
-				spriteBatch.Draw(image, destRect, Color.White);
-			}
 		}
 
 		private void DrawGorillas()

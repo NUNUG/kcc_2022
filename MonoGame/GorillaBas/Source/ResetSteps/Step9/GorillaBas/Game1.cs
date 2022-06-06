@@ -75,25 +75,6 @@ namespace GorillaBas
 			else if (Firing && !Explosion.Active)
 			{
 				Banana.ApplyGravity();
-
-				// If the banana goes out of bounds, end the turn.  Don't let it fall for eternity!
-				bool bananaIsInBounds =
-				(
-					Banana.Area.Top < GameSettings.ScreenSize.Height
-					&& Banana.Area.Left > 0
-					&& Banana.Area.Left < GameSettings.ScreenSize.Width
-				);
-
-				if (!bananaIsInBounds)
-				{
-					Firing = false;
-					NextTurn();
-				}
-
-				if (GameSettings.Debug)
-					if (previousBananas.Count < 10000)
-						previousBananas.Add(((int)Banana.Position.X, (int)Banana.Position.Y));
-
 				CheckForImpact(gameTime);
 			}
 
@@ -113,32 +94,15 @@ namespace GorillaBas
 			DrawGorillas();
 
 			if (Firing)
-			{
 				DrawBanana();
-				DrawBananaGuide();
-			}
 
 			if (Explosion.Active)
-			{
 				DrawExplosion();
-			}
 
 			DrawText();
-			DrawDebugText();
 			spriteBatch.End();
 
 			base.Draw(gameTime);
-		}
-
-		private void DrawBananaGuide()
-		{
-			if (Banana.Position.Y < 0)
-			{
-				var image = LoadedContent.GuideArrow;
-				var size = GameSettings.GuideArrowSize;
-				Rectangle destRect = new Rectangle((int)Banana.Position.X - size / 2, 0, size, size);
-				spriteBatch.Draw(image, destRect, Color.White);
-			}
 		}
 
 		private void DrawGorillas()

@@ -13,7 +13,7 @@ namespace GorillaBas.GameCode
 		public List<Building> Buildings { get; set; }
 		public Texture2D GorillaImage { get; set; }
 		public Texture2D BananaImage { get; set; }
-		public Texture2D SplosionImage { get; set; }
+		public Texture2D ExplosionImage { get; set; }
 		public Texture2D GuideArrow { get; set; }
 		public (GorillaData LeftGorilla, GorillaData RightGorilla) Gorillas { get; set; }
 		public SoundEffect ExplosionSound { get; set; }

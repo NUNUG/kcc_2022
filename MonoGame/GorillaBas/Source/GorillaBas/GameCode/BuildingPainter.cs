@@ -16,8 +16,6 @@ namespace GorillaBas.GameCode
 		private readonly SpriteBatch spriteBatch;
 		private Pixel pixel;
 
-		private Random rnd;
-
 		public BuildingPainter(GameSettings gameSettings, LoadedContent loadedContent, GraphicsDevice graphics, SpriteBatch spriteBatch)
 		{
 			this.gameSettings = gameSettings;
@@ -25,7 +23,6 @@ namespace GorillaBas.GameCode
 			this.graphics = graphics;
 			this.spriteBatch = spriteBatch;
 			pixel = new Pixel(graphics);
-			rnd = new Random();
 		}
 
 		public void Draw()
@@ -38,11 +35,6 @@ namespace GorillaBas.GameCode
 		{
 			// Draw building.
 			pixel.Color = b.BuildingColor;
-			//Rectangle destRect = new Rectangle(
-			//	b.Position.X,
-			//	b.Position.Y,
-			//	b.Position.X + b.Width,
-			//	b.Position.Y + b.Height);
 			spriteBatch.Draw(pixel.Value, b.Area, Color.White);
 
 			// Draw windows.
