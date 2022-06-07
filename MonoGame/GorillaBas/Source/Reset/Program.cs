@@ -37,9 +37,8 @@ namespace Reset
 				string stepNumberText = Console.ReadLine();
 				if (int.TryParse(stepNumberText, out int stepNumber))
 				{
-					if ((stepNumber >= 0) && (stepNumber <= StepCount - 1))
+					if (RestoreStep(stepNumber))
 					{
-						RestoreStep(stepNumber);
 						Console.WriteLine("Restored step {stepNumber}.");
 					}
 					else
@@ -93,12 +92,18 @@ namespace Reset
 			}
 		}
 
-		protected void RestoreStep(int stepNumber)
+		protected bool RestoreStep(int stepNumber)
 		{
 			string source = Path.Combine(StepsDirectory, $"Step{stepNumber}/GorillaBas");
 			string target = Path.GetFullPath(Path.Combine(StepsDirectory, "..", "GorillaBas"));
 
-			CopyDirectory(source, target);
+			if (Directory.Exists(source))
+			{
+				CopyDirectory(source, target);
+				return true;
+			}
+			else
+				return false;
 		}
 
 		public void Execute()
